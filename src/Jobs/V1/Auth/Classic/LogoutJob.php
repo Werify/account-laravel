@@ -11,7 +11,7 @@ class LogoutJob extends BaseRequest
 
     public function __construct(string $bearer = null)
     {
-        $this->bearer = $bearer ?? cookie()->get(config('waccount.cookie_name'));
+        $this->bearer = $bearer ?? cookie(config('waccount.cookie_name'));
         if ($this->bearer === null) return redirect()->route(config('waccount.login_route'));
     }
 

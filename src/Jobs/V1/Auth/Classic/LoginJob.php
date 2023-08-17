@@ -22,7 +22,10 @@ class LoginJob extends BaseRequest
             ];
             $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.auth.classic.login'));
             $req = $this->post($endpoint, $this->data);
-            if ($req->status() === 200) return $req->json();
+            if ($req->status() === 200){
+                cookie()->queue(config('waccount.cookie_name'), $req->json()['results']['access_token'], 60 * 24 * 30);
+                return $req->json();
+            }
             throw new \Exception($req->json()['message']);
         }catch (\Exception $e){
             if (config('waccount.debug')) throw new \Exception($e->getMessage());

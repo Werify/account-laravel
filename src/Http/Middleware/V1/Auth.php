@@ -3,6 +3,7 @@
 namespace Werify\Account\Laravel\Http\Middleware\V1;
 
 use Closure;
+use http\Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,6 @@ class Auth
     {
         $token = $request->cookie(config('waccount.cookie_name'));
         if (!$token) return redirect()->route(config('waccount.login_route'));
-        $request->header('Authorization', 'Bearer '. $token);
         $request->headers->set('Authorization', 'Bearer '. $token);
         try{
             $me = dispatch_sync(new MeJob($token));
@@ -24,12 +24,12 @@ class Auth
                 View::share('user', $me['results']);
             }
         }catch (\Exception $e){
-            cookie()->queue(cookie()->forget(config('waccount.cookie_name')));
+            Cookie::make(config('waccount.cookie_name'), null, -1);
             return redirect()->route(config('waccount.login_route'));
         }
         $response =  $next($request);
         if ($response->getStatusCode() == 401) {
-            cookie()->queue(cookie()->forget(config('waccount.cookie_name')));
+            Cookie::make(config('waccount.cookie_name'), null, -1);
             return redirect()->route(config('waccount.login_route'));
         }
         return $response;

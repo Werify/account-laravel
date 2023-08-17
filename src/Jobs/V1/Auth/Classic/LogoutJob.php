@@ -1,7 +1,7 @@
 <?php
 namespace Werify\Account\Laravel\Jobs\V1\Auth\Classic;
 
-
+use Illuminate\Support\Facades\Cookie;
 use Werify\Account\Laravel\Repositories\Contracts\BaseRequest;
 
 class LogoutJob extends BaseRequest
@@ -11,7 +11,7 @@ class LogoutJob extends BaseRequest
 
     public function __construct(string $bearer = null)
     {
-        $this->bearer = $bearer ?? cookie(config('waccount.cookie_name'));
+        $this->bearer = $bearer ?? Cookie::get(config('waccount.cookie_name'));
         if ($this->bearer === null) return redirect()->route(config('waccount.login_route'));
     }
 
@@ -20,7 +20,7 @@ class LogoutJob extends BaseRequest
             $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.auth.classic.logout'));
             $req = $this->post($endpoint, null, $this->bearer);
             if ($req->status() === 200){
-                cookie()->queue(cookie()->forget(config('waccount.cookie_name')));
+                Cookie::make(config('waccount.cookie_name'), null, -1);
                 return $req->json();
             }
             throw new \Exception($req->json()['message']);

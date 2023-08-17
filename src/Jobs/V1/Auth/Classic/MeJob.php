@@ -2,6 +2,7 @@
 namespace Werify\Account\Laravel\Jobs\V1\Auth\Classic;
 
 
+use Illuminate\Support\Facades\Cookie;
 use Werify\Account\Laravel\Repositories\Contracts\BaseRequest;
 
 class MeJob extends BaseRequest
@@ -10,7 +11,7 @@ class MeJob extends BaseRequest
 
     public function __construct(string $bearer = null)
     {
-        $this->bearer = $bearer ?? cookie(config('waccount.cookie_name'));
+        $this->bearer = $bearer ?? Cookie::get(config('waccount.cookie_name'));
         if ($this->bearer === null) return redirect()->route(config('waccount.login_route'));
     }
 

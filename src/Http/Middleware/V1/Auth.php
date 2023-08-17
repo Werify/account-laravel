@@ -3,7 +3,7 @@
 namespace Werify\Account\Laravel\Http\Middleware\V1;
 
 use Closure;
-use http\Cookie;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\Response;

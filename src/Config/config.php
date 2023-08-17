@@ -20,6 +20,7 @@ return [
                 'classic' => [
                     'login' => 'auth/classic/login',
                     'register' => 'auth/classic/register',
+                    'me' => 'auth/classic/me',
                 ],
             ],
         ]

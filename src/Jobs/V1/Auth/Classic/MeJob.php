@@ -10,6 +10,7 @@ class MeJob extends BaseRequest
 
     public function __construct(string $bearer)
     {
+        if ($bearer === null) return redirect()->route(config('waccount.login_route'));
         $this->bearer = $bearer;
     }
 

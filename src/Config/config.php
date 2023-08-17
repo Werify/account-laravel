@@ -7,6 +7,8 @@ return [
     'debug' => env('APP_DEBUG', false),
     'client_id' => env('WA_CLIENT_ID', 'sandbox'),
     'client_secret' => env('WA_CLIENT_SECRET', 'sandbox'),
+    'cookie_name' => env('WA_COOKIE_NAME', 'waccount_token'),
+    'login_route' => env('WA_LOGIN_ROUTE', 'login'),
 
     // API
     'api' => [

@@ -1,24 +1,24 @@
 <?php
-namespace Bulutly\Laravel\Providers;
+namespace Werify\Account\Laravel\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class BulutlyServiceProvider extends ServiceProvider
+class WAccountServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../Config/config.php', 'bulutly');
+        $this->mergeConfigFrom(__DIR__.'/../Config/config.php', 'waccount');
     }
 
     public function boot()
     {
-        if (config('bulutly.routes.enabled')){
+        if (config('waccount.routes.enabled')){
             $this->loadRoutesFrom(__DIR__.'/../Routes/api.php');
         }
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../Config/config.php' => config_path('bulutly.php'),
+                __DIR__.'/../Config/config.php' => config_path('waccount.php'),
             ], 'config');
         }
     }

@@ -4,7 +4,7 @@ namespace Werify\Account\Laravel\Http\Requests\V1\Auth\Classic;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class LoginRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
 
@@ -17,7 +17,8 @@ class LoginRequest extends FormRequest
     {
         return [
             'identifier' => 'required|string',
-            'password' => 'required|string',
+            'password' => 'nullable|string|min:8|confirmed',
+            'first_name' => 'nullable|string',
         ];
     }
 

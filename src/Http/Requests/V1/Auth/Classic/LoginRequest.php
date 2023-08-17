@@ -1,10 +1,10 @@
 <?php
-namespace Bulutly\Laravel\Http\Requests\V1\Buluts;
+namespace Werify\Account\Laravel\Http\Requests\V1\Auth\Classic;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
 
@@ -16,17 +16,8 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'project_id' => 'nullable|uuid',
-            'image_id' => 'required|uuid',
-            'memory' => 'nullable|integer',
-            'cpu' => 'nullable|integer',
-            'name' => 'nullable|string',
-            'region' => 'nullable|integer',
-            'description' => 'nullable|string',
-            'auto_scale_cpu' => 'nullable|integer',
-            'auto_scale_memory' => 'nullable|integer',
-            'tags' => 'nullable|string|max:255',
-            'startup_script' => 'nullable|string|max:65535',
+            'identifier' => 'required|string',
+            'password' => 'required|string',
         ];
     }
 

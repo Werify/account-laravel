@@ -1,47 +1,48 @@
 <?php
-namespace Bulutly\Laravel\Repositories\Contracts;
+namespace Werify\Account\Laravel\Repositories\Contracts;
 
 use Illuminate\Support\Facades\Http;
 
 abstract class BaseRequest
 {
-    public function post($path, $payload = null, $token = null, $key = null)
+    public function post($path, $payload = null, $token = null)
     {
-        if ($payload === null) return Http::withHeaders($this->getHeaders($token, $key))->post($path);
-        return Http::withHeaders($this->getHeaders($token, $key))->post($path, $payload);
+        if ($payload === null) return Http::withHeaders($this->getHeaders($token))->post($path);
+        return Http::withHeaders($this->getHeaders($token))->post($path, $payload);
     }
 
-    public function put($path, $payload = null, $token = null, $key = null)
+    public function put($path, $payload = null, $token = null)
     {
-        if ($payload === null) return Http::withHeaders($this->getHeaders($token, $key))->put($path);
-        return Http::withHeaders($this->getHeaders($token, $key))->put($path, $payload);
+        if ($payload === null) return Http::withHeaders($this->getHeaders($token))->put($path);
+        return Http::withHeaders($this->getHeaders($token))->put($path, $payload);
     }
 
-    public function delete($path, $payload = null, $token = null, $key = null)
+    public function delete($path, $payload = null, $token = null)
     {
-        if ($payload === null) return Http::withHeaders($this->getHeaders($token, $key))->delete($path);
-        return Http::withHeaders($this->getHeaders($token, $key))->delete($path, $payload);
+        if ($payload === null) return Http::withHeaders($this->getHeaders($token))->delete($path);
+        return Http::withHeaders($this->getHeaders($token))->delete($path, $payload);
     }
 
-    public function get($path, $token = null, $key = null)
+    public function get($path, $token = null)
     {
-        return Http::withHeaders($this->getHeaders($token, $key))->get($path);
+        return Http::withHeaders($this->getHeaders($token))->get($path);
     }
 
     public function generateApiUrl(string $path): string
     {
-        $baseUrl = config('bulutly.sandbox', false) ? config('bulutly.api.sandbox_url') : config('bulutly.api.url');
-        return $baseUrl.'/'.config('bulutly.api.version').'/'.$path;
+        $baseUrl = config('waccount.sandbox', false) ? config('waccount.api.sandbox_url') : config('waccount.api.url');
+        return $baseUrl.'/'.config('waccount.api.version').'/'.$path;
 
     }
 
-    public function getHeaders($token = null, $key = null): array
+    public function getHeaders($token = null): array
     {
         $headers = [
             'accept' => 'application/json',
             'content-type' => 'application/json',
+            'X-WACCOUNT-CLIENT-ID' => config('waccount.client_id'),
+            'X-WACCOUNT-CLIENT-SECRET' => config('waccount.client_secret'),
         ];
-        $headers['X-BULUTLY-API'] = $key ?? config('bulutly.api.key');
         if ($token) $headers['Authorization'] = 'Bearer '.$token;
         return $headers;
     }

@@ -9,7 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
  - Structure and base classes of package
- - Projects `BREAD` methods.
- - Buluts `BREAD` methods.
- - Bulut ENVs `list`, `store`, `update`, `delete` methods.
- - Images `list` method.
+ - Add `login` and `register` methods in `auth:classic` module.

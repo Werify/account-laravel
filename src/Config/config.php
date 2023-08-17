@@ -3,46 +3,30 @@
 return [
 
     // General
-    'sandbox' => env('BLT_SANDBOX_MODE', false),
+    'sandbox' => env('WA_SANDBOX_MODE', false),
     'debug' => env('APP_DEBUG', false),
+    'client_id' => env('WA_CLIENT_ID', 'sandbox'),
+    'client_secret' => env('WA_CLIENT_SECRET', 'sandbox'),
 
     // API
     'api' => [
-        'url' => env('BLT_API_URL', 'https://bulutly.net/api'),
-        'sandbox_url' => env('BLT_SANDBOX_API_URL', 'https://sandbox.bulutly.net/api'),
-        'key' => env('BLT_API_KEY', 'sandbox'),
+        'url' => env('WA_API_URL', 'https://account.werify.net/api'),
+        'sandbox_url' => env('WA_SANDBOX_API_URL', 'https://sandbox.account.werify.net/api'),
         'version' => 'v1',
         'endpoints' => [
-            'projects' => [
-                'index' => 'projects',
-                'store' => 'projects',
-                'show' => 'projects/{uuid}',
-                'update' => 'projects/{uuid}',
-                'delete' => 'projects/{uuid}',
-            ],
-            'buluts' => [
-                'index' => 'buluts',
-                'store' => 'buluts',
-                'show' => 'buluts/{uuid}',
-                'update' => 'buluts/{uuid}',
-                'delete' => 'buluts/{uuid}',
-                'envs' => [
-                    'index' => 'buluts/{uuid}/envs',
-                    'store' => 'buluts/{uuid}/envs',
-                    'update' => 'buluts/{uuid}/envs/{env_uuid}/edit',
-                    'delete' => 'buluts/{uuid}/envs/{env_uuid}/delete',
+            'auth' => [
+                'classic' => [
+                    'login' => 'auth/classic/login',
+                    'register' => 'auth/classic/register',
                 ],
-            ],
-            'images' => [
-                'index' => 'images',
             ],
         ]
     ],
 
     // Routes
     'routes' => [
-        'enabled' => env('BLT_ROUTES_ENABLED', false),
-        'prefix' => env('BLT_ROUTES_PREFIX', 'bulutly'),
+        'enabled' => env('WA_ROUTES_ENABLED', false),
+        'prefix' => env('WA_ROUTES_PREFIX', 'waccount'),
     ],
 
 ];

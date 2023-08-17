@@ -1,5 +1,5 @@
 <?php
-namespace Bulutly\Laravel\Repositories\Contracts;
+namespace Werify\Account\Laravel\Repositories\Contracts;
 
 interface RequestInterface
 {

@@ -8,5 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+ - Add `WAuthServiceProvider` and `WAuthGuard` for custom auth driver.
+
+### Added
  - Structure and base classes of package
  - Add `login` and `register` methods in `auth:classic` module.

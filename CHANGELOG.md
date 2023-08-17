@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+ - Add `logout` method in `auth:classic` module.
+
+### Added
  - Add `me` method in `auth:classic` module.
 
 ### Added

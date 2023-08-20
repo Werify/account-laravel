@@ -1,25 +1,23 @@
 <?php
-namespace Werify\Account\Laravel\Jobs\V1\Auth\Classic;
+namespace Werify\Account\Laravel\Jobs\V1\Authorize\Classic;
 
 use Werify\Account\Laravel\Repositories\Contracts\BaseRequest;
 
-class LoginJob extends BaseRequest
+class CheckJob extends BaseRequest
 {
-    public $identifier, $password;
+    public string $token;
 
-    public function __construct(array $data)
+    public function __construct(string $token)
     {
-        $this->identifier = $data['identifier'];
-        $this->password = $data['password'];
+        $this->token = $token;
     }
 
     public function handle(){
         try{
             $this->data = [
-                'identifier' => $this->identifier,
-                'password' => $this->password,
+                'token' => $this->token,
             ];
-            $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.auth.classic.login'));
+            $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.authorize.classic.check'));
             $req = $this->post($endpoint, $this->data);
             if ($req->status() === 200){
                 cookie()->queue(config('waccount.cookie_name'), $req->json()['results']['access_token'], 60 * 24 * 30);
@@ -28,7 +26,7 @@ class LoginJob extends BaseRequest
             throw new \Exception($req->json()['message']);
         }catch (\Exception $e){
             if (config('waccount.debug')) throw new \Exception($e->getMessage());
-            throw new \Exception('WAccount classic login failed');
+            throw new \Exception('WAccount authorize check failed');
         }
     }
 

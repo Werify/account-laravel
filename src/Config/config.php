@@ -24,6 +24,12 @@ return [
                     'logout' => 'auth/classic/logout'
                 ],
             ],
+            'authorize' => [
+                'classic' => [
+                    'start' => 'authorize/classic/start',
+                    'check' => 'authorize/classic/check',
+                ]
+            ]
         ]
     ],
 

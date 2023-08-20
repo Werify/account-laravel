@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+ - Add `start` and `check` methods in `authorize:classic` module.
+
+### Added
  - Add `logout` method in `auth:classic` module.
 
 ### Added

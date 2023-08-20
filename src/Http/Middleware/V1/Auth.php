@@ -27,11 +27,6 @@ class Auth
             Cookie::make(config('waccount.cookie_name'), null, -1);
             return redirect()->route(config('waccount.login_route'));
         }
-        $response =  $next($request);
-        if ($response->getStatusCode() == 401) {
-            Cookie::make(config('waccount.cookie_name'), null, -1);
-            return redirect()->route(config('waccount.login_route'));
-        }
-        return $response;
+        return $next($request);
     }
 }

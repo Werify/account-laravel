@@ -9,7 +9,7 @@ class WebController extends Controller
     public function logout(){
         try{
             $res = dispatch_sync(new LogoutJob());
-            $res['succeed'] ? redirect()->route(config('waccount.logout_route')) : redirect()->back()->withErrors($res['message']);
+            return $res['succeed'] ? redirect()->route(config('waccount.logout_route')) : throw new \Exception($res['message']);
         }catch (\Exception $e){
             if (config('waccount.debug')) return $this->setErrorMessage($e->getMessage())->respondWithError();
             return $this->setErrorMessage('WAccount classic logout failed')->respondWithError();

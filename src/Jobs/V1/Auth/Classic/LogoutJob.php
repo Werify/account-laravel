@@ -9,10 +9,13 @@ class LogoutJob extends BaseRequest
 
     public $bearer;
 
+    /**
+     * @throws \Exception
+     */
     public function __construct(string $bearer = null)
     {
-        $this->bearer = $bearer ?? Cookie::get(config('waccount.cookie_name'));
-        if ($this->bearer === null) return redirect()->route(config('waccount.login_route'));
+        $this->bearer = $bearer ?? session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
+        if ($this->bearer === null) return throw new \Exception('WAccount bearer token not found');
     }
 
     public function handle(){
@@ -20,7 +23,7 @@ class LogoutJob extends BaseRequest
             $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.auth.classic.logout'));
             $req = $this->post($endpoint, null, $this->bearer);
             if ($req->status() === 200){
-                Cookie::make(config('waccount.cookie_name'), null, -1);
+                session()->driver(config('waccount.session.driver'))->forget(config('waccount.session.variable'));
                 return $req->json();
             }
             throw new \Exception($req->json()['message']);

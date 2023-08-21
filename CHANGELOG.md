@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+ - Fix `logout` method in `auth:classic` module.
+ - Cookies replaced with session for logic.
+
 ### Added 
  - Add `wauth` as middleware with auto register in package service provider.
 

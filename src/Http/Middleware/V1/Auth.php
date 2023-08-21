@@ -14,7 +14,7 @@ class Auth
 
     public function handle(Request $request, Closure $next): Response
     {
-        $token = $request->cookie(config('waccount.cookie_name'));
+        $token = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
         if (!$token) return redirect()->route(config('waccount.login_route'));
         $request->headers->set('Authorization', 'Bearer '. $token);
         try{
@@ -24,7 +24,8 @@ class Auth
                 View::share('user', $me['results']);
             }
         }catch (\Exception $e){
-            Cookie::make(config('waccount.cookie_name'), null, -1);
+            if (config('waccount.debug')) throw new \Exception($e->getMessage());
+            session()->driver(config('waccount.session.driver'))->forget(config('waccount.session.variable'));
             return redirect()->route(config('waccount.login_route'));
         }
         return $next($request);

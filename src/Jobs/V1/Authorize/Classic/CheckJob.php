@@ -20,7 +20,7 @@ class CheckJob extends BaseRequest
             $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.authorize.classic.check'));
             $req = $this->post($endpoint, $this->data);
             if ($req->status() === 200){
-                cookie()->queue(config('waccount.cookie_name'), $req->json()['results']['access_token'], 60 * 24 * 30);
+                session()->driver(config('waccount.session.driver'))->put(config('waccount.session.variable'), $req->json()['results']['access_token']);
                 return $req->json();
             }
             throw new \Exception($req->json()['message']);

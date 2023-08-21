@@ -11,7 +11,7 @@ class MeJob extends BaseRequest
 
     public function __construct(string $bearer = null)
     {
-        $this->bearer = $bearer ?? Cookie::get(config('waccount.cookie_name'));
+        $this->bearer = $bearer ?? session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
         if ($this->bearer === null) return redirect()->route(config('waccount.login_route'));
     }
 

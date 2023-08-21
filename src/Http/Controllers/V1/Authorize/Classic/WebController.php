@@ -1,34 +1,29 @@
 <?php
 namespace Werify\Account\Laravel\Http\Controllers\V1\Authorize\Classic;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Werify\Account\Laravel\Http\Requests\V1\Authorize\Classic\CheckRequest;
-use Werify\Account\Laravel\Http\Requests\V1\Authorize\Classic\StartRequest;
-use Werify\Account\Laravel\Http\Resources\V1\Authorize\Classic\StartResource;
 use Werify\Account\Laravel\Jobs\V1\Authorize\Classic\CheckJob;
 use Werify\Account\Laravel\Jobs\V1\Authorize\Classic\StartJob;
 
 class WebController extends Controller
 {
 
-    public function start(StartRequest $r){
+    public function login()
+    {
         try{
-            $scopes = $r->input('scopes', []);
-            return $this->respond(StartResource::make(dispatch_sync(new StartJob($scopes))));
+            $authorize = dispatch_sync(new StartJob());
+            return $authorize['succeed'] ? redirect($authorize['results']['url']) : redirect()->back()->withInput()->withErrors($authorize['message']);
         }catch (\Exception $e){
-            if (config('waccount.debug')) return $this->setErrorMessage($e->getMessage())->respondWithError();
-            return $this->setErrorMessage('WAccount authorize start failed')->respondWithError();
+            return redirect()->back()->withInput()->withErrors($e->getMessage());
         }
     }
 
-    public function check(CheckRequest $r){
-        try{
-            $token = $r->input('token');
-            return $this->respond(dispatch_sync(new CheckJob($token)));
-        }catch (\Exception $e){
-            if (config('waccount.debug')) return $this->setErrorMessage($e->getMessage())->respondWithError();
-            return $this->setErrorMessage('WAccount classic register failed')->respondWithError();
-        }
+    public function callback(Request $r)
+    {
+        $token = $r->token;
+        $res = dispatch_sync(new CheckJob($token));
+        return $res['succeed'] ? redirect()->route(config('waccount.home_route')) : redirect()->back()->withErrors($res['message']);
     }
 
 }

@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+ - Add `logout` method for web on `auth:classic` module.
+ - Add `start` and `check` methods for web on `authorize:classic` module.
+ - Add `logout_route`, `routes.api`, and `routes.web` to config file.
+
+### Added
  - Add `start` and `check` methods in `authorize:classic` module.
 
 ### Added

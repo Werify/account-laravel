@@ -9,7 +9,7 @@ use Werify\Account\Laravel\Jobs\V1\Authorize\Classic\StartJob;
 class WebController extends Controller
 {
 
-    public function login()
+    public function start()
     {
         try{
             $authorize = dispatch_sync(new StartJob());
@@ -19,7 +19,7 @@ class WebController extends Controller
         }
     }
 
-    public function callback(Request $r)
+    public function check(Request $r)
     {
         $token = $r->token;
         $res = dispatch_sync(new CheckJob($token));

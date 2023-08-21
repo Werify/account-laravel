@@ -9,6 +9,7 @@ return [
     'client_secret' => env('WA_CLIENT_SECRET', 'sandbox'),
     'cookie_name' => env('WA_COOKIE_NAME', 'waccount_token'),
     'login_route' => env('WA_LOGIN_ROUTE', 'login'),
+    'home_route' => env('WA_HOME_ROUTE', 'home'),
 
     // API
     'api' => [
@@ -35,8 +36,14 @@ return [
 
     // Routes
     'routes' => [
-        'enabled' => env('WA_ROUTES_ENABLED', false),
-        'prefix' => env('WA_ROUTES_PREFIX', 'waccount'),
+        'api' => [
+            'enabled' => env('WA_ROUTES_API_ENABLED', false),
+            'prefix' => env('WA_ROUTES_API_PREFIX', 'waccount'),
+        ],
+        'web' => [
+            'enabled' => env('WA_ROUTES_WEB_ENABLED', false),
+            'prefix' => env('WA_ROUTES_WEB_PREFIX', 'waccount'),
+        ],
     ],
 
 ];

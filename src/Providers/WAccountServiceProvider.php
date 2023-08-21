@@ -12,9 +12,8 @@ class WAccountServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if (config('waccount.routes.enabled')){
-            $this->loadRoutesFrom(__DIR__.'/../Routes/api.php');
-        }
+        if (config('waccount.routes.api.enabled')) $this->loadRoutesFrom(__DIR__.'/../Routes/api.php');
+        if (config('waccount.routes.web.enabled')) $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([

@@ -1,5 +1,5 @@
 <?php
-namespace Werify\Account\Laravel\Http\Controllers\V1\Auth;
+namespace Werify\Account\Laravel\Http\Controllers\V1\Auth\Classic;
 
 use Briofy\RestLaravel\Http\Controllers\RestController;
 use Werify\Account\Laravel\Http\Requests\V1\Auth\Classic\LoginRequest;
@@ -10,7 +10,7 @@ use Werify\Account\Laravel\Jobs\V1\Auth\Classic\LogoutJob;
 use Werify\Account\Laravel\Jobs\V1\Auth\Classic\MeJob;
 use Werify\Account\Laravel\Jobs\V1\Auth\Classic\RegisterJob;
 
-class ClassicController extends RestController
+class ApiController extends RestController
 {
 
     public function login(LoginRequest $r){

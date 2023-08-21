@@ -1,14 +1,14 @@
 <?php
-namespace Werify\Account\Laravel\Http\Controllers\V1\Authorize;
+namespace Werify\Account\Laravel\Http\Controllers\V1\Authorize\Classic;
 
-use Briofy\RestLaravel\Http\Controllers\RestController;
+use Illuminate\Routing\Controller;
 use Werify\Account\Laravel\Http\Requests\V1\Authorize\Classic\CheckRequest;
 use Werify\Account\Laravel\Http\Requests\V1\Authorize\Classic\StartRequest;
 use Werify\Account\Laravel\Http\Resources\V1\Authorize\Classic\StartResource;
 use Werify\Account\Laravel\Jobs\V1\Authorize\Classic\CheckJob;
 use Werify\Account\Laravel\Jobs\V1\Authorize\Classic\StartJob;
 
-class ClassicController extends RestController
+class WebController extends Controller
 {
 
     public function start(StartRequest $r){

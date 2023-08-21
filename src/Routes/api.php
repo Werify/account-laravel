@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Werify\Account\Laravel\Http\Controllers\V1\Auth\Classic\ApiController;
 use Werify\Account\Laravel\Http\Controllers\V1\Authorize\Classic\ApiController as ClassicControllerAlias;
 
-Route::prefix(config('waccount.routes.api.prefix'))->group(function () {
+Route::prefix(config('waccount.routes.api.prefix'))->name(config('waccount.routes.api.name'))->group(function () {
 
     // Auth
     Route::prefix('auth')->name('auth.')->group(function(){

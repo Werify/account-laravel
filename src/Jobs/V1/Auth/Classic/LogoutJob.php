@@ -14,7 +14,14 @@ class LogoutJob extends BaseRequest
      */
     public function __construct(string $bearer = null)
     {
-        $this->bearer = $bearer ?? session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
+        if(!$this->bearer){
+            $user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
+            if ($user === null) return throw new \Exception('WAccount session user not found');
+            if(!array_key_exists('access_token', $user)) return throw new \Exception('WAccount bearer token not found');
+            $this->bearer = $user['access_token'];
+        }else{
+            $this->bearer = $bearer;
+        }
         if ($this->bearer === null) return throw new \Exception('WAccount bearer token not found');
     }
 

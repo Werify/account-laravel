@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+ - Fix `logout` job constructor method to get user token from session variable.
+
 ### Added
  - Add `session.view_variable` to config file, set `true` to set view variable with user object schema.
 

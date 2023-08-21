@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added 
+ - Add `wauth` as middleware with auto register in package service provider.
+
 ### Added
  - Add name to routes and update config file.
 

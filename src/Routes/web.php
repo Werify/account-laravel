@@ -8,7 +8,7 @@ Route::prefix(config('waccount.routes.web.prefix'))->name(config('waccount.route
 
     Route::prefix('auth')->name('auth.')->group(function(){
         Route::prefix('classic')->name('classic.')->controller(WebController::class)->group(function(){
-            Route::post('logout', 'logout')->name('logout');
+            Route::post('logout', 'logout')->name('logout')->middleware('wauth');
         });
     });
 

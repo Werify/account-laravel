@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
- - Add `session.view` to config file, set `true` to set view variable with user object schema.
+ - Add `session.view_variable` to config file, set `true` to set view variable with user object schema.
 
 ### Fixed
  - Fix session variable schema with access token.

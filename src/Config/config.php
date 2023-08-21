@@ -15,7 +15,7 @@ return [
     'session' => [
         'driver' => env('WA_SESSION_DRIVER', 'file'),
         'variable' => env('WA_SESSION_VARIABLE', 'user'),
-        'view' => env('WA_SESSION_VIEW_VARIABLE', true)
+        'view_variable' => env('WA_SESSION_VIEW_VARIABLE', true)
     ],
 
     // API

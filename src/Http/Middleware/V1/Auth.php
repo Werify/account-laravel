@@ -23,7 +23,7 @@ class Auth
                 $data = $me['results'];
                 $data['access_token'] = $token;
                 session()->driver(config('waccount.session.driver'))->put(config('waccount.session.variable'), $data);
-                if(config('waccount.session.view')) View::share(config('waccount.session.variable'), $data);
+                if(config('waccount.session.view_variable')) View::share(config('waccount.session.variable'), $data);
             }
         }catch (\Exception $e){
             if (config('waccount.debug')) throw new \Exception($e->getMessage());

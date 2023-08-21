@@ -14,14 +14,16 @@ class Auth
 
     public function handle(Request $request, Closure $next): Response
     {
-        $token = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
+        $token = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'))['access_token'];
         if (!$token) return redirect()->route(config('waccount.login_route'));
         $request->headers->set('Authorization', 'Bearer '. $token);
         try{
             $me = dispatch_sync(new MeJob($token));
             if ($me['succeed']){
-                session()->put('user', $me['results']);
-                View::share('user', $me['results']);
+                $data = $me['results'];
+                $data['access_token'] = $token;
+                session()->driver(config('waccount.session.driver'))->put(config('waccount.session.variable'), $data);
+                if(config('waccount.session.view')) View::share(config('waccount.session.variable'), $data);
             }
         }catch (\Exception $e){
             if (config('waccount.debug')) throw new \Exception($e->getMessage());

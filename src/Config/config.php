@@ -39,11 +39,13 @@ return [
     'routes' => [
         'api' => [
             'enabled' => env('WA_ROUTES_API_ENABLED', false),
-            'prefix' => env('WA_ROUTES_API_PREFIX', 'waccount.api'),
+            'prefix' => env('WA_ROUTES_API_PREFIX', 'waccount/api'),
+            'name' => env('WA_ROUTES_API_NAME', 'waccount.api'),
         ],
         'web' => [
             'enabled' => env('WA_ROUTES_WEB_ENABLED', false),
-            'prefix' => env('WA_ROUTES_WEB_PREFIX', 'waccount.web'),
+            'prefix' => env('WA_ROUTES_WEB_PREFIX', 'waccount/web'),
+            'name' => env('WA_ROUTES_WEB_NAME', 'waccount.web'),
         ],
     ],
 

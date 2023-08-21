@@ -14,7 +14,9 @@ class Auth
 
     public function handle(Request $request, Closure $next): Response
     {
-        $token = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'))['access_token'];
+        $token = null;
+        $user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
+        if(array_key_exists('access_token', $user)) $token = $user['access_token'];
         if (!$token) return redirect()->route(config('waccount.login_route'));
         $request->headers->set('Authorization', 'Bearer '. $token);
         try{

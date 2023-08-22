@@ -16,8 +16,7 @@ class WController extends Controller
     public mixed $userId;
     public function __construct()
     {
-        parent::__construct();
-        $this->user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
+        $this->user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable')) ?? [];
         if (array_key_exists('id', $this->user)) $this->userId = $this->user['id'];
     }
 

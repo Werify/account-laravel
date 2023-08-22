@@ -17,7 +17,7 @@ class WController extends Controller
     public function __construct()
     {
         $this->user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable')) ?? [];
-        if (array_key_exists('id', $this->user)) $this->userId = $this->user['id'];
+        $this->userId = array_key_exists('id', $this->user) ? $this->user['id'] : null;
     }
 
 }

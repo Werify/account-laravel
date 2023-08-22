@@ -16,8 +16,11 @@ class WController extends Controller
     public mixed $userId = null;
     public function __construct()
     {
-        $this->user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable')) ?? [];
-        $this->userId = array_key_exists('id', $this->user) ? $this->user['id'] : null;
+        $this->middleware(function ($request, $next){
+            $this->user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable')) ?? [];
+            $this->userId = array_key_exists('id', $this->user) ? $this->user['id'] : null;
+            return $next($request);
+        });
     }
 
 }

@@ -12,8 +12,8 @@ class WController extends Controller
 
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public array $user;
-    public mixed $userId;
+    public array $user = [];
+    public mixed $userId = null;
     public function __construct()
     {
         $this->user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable')) ?? [];

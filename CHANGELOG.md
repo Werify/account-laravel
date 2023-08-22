@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+ - Add `WController` class extends from `Illuminate\Routing\Controller` with `user` and `userId` object properties.
+
+## [Unreleased]
+
 ### Fixed
  - Fix `logout` job constructor method to get user token from session variable.
 

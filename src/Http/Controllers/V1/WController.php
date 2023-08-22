@@ -12,8 +12,8 @@ class WController extends Controller
 
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    private array $user;
-    private mixed $userId;
+    public array $user;
+    public mixed $userId;
     public function __construct()
     {
         parent::__construct();

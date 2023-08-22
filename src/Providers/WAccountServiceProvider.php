@@ -20,7 +20,7 @@ class WAccountServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../Config/config.php' => config_path('waccount.php'),
-            ], 'config');
+            ], 'waccount-config');
         }
     }
 

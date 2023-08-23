@@ -30,6 +30,7 @@ class Auth
                 $data = $me['results'];
                 $data['access_token'] = $token;
                 session()->driver(config('waccount.session.driver'))->put(config('waccount.session.variable'), $data);
+                app()->setLocale($data['language']);
                 if (config('waccount.session.view_variable')) {
                     View::share(config('waccount.session.variable'), $data);
                 }

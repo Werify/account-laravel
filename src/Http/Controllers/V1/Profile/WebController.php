@@ -35,11 +35,10 @@ class WebController extends Controller
                 $url = str_replace(Currency::currencies, $r->input('currency'), $url);
             }
             if (! empty($data)) {
-                try{
+                try {
                     dispatch_sync(new UpdateJob(data: $data));
-                }catch (\Exception $e){
+                } catch (\Exception $e) {
                     session()->driver(config('waccount.session.driver'))->put('language', $r->input('language'));
-                    return redirect($url);
                 }
             }
 
@@ -57,9 +56,14 @@ class WebController extends Controller
     {
         try {
             $data = ['dark_mode' => $r->input('dark_mode')];
-            dispatch_sync(new UpdateJob(data: $data));
+            $url = str_replace(DarkMode::toArray(), $r->input('dark_mode'), url()->previous());
+            try {
+                dispatch_sync(new UpdateJob(data: $data));
+            } catch (\Exception $e) {
+                session()->driver(config('waccount.session.driver'))->put('dark_mode', $r->input('dark_mode'));
+            }
 
-            return redirect(str_replace(DarkMode::toArray(), $r->input('dark_mode'), url()->previous()));
+            return redirect($url);
         } catch (\Exception $e) {
             if (config('waccount.debug')) {
                 throw $e;

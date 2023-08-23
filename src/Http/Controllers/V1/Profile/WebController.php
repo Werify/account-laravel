@@ -25,7 +25,7 @@ class WebController extends Controller
                 $data['currency'] = $r->input('currency');
             }
             if (! empty($data)) {
-                dispatch_sync(new UpdateJob($data));
+                dispatch_sync(new UpdateJob(data:$data));
             }
 
             return redirect(url()->previous());
@@ -42,7 +42,7 @@ class WebController extends Controller
     {
         try {
             $data = ['dark_mode' => $r->input('dark_mode')];
-            dispatch_sync(new UpdateJob($data));
+            dispatch_sync(new UpdateJob(data:$data));
 
             return redirect(url()->previous());
         } catch (\Exception $e) {

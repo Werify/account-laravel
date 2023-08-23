@@ -8,7 +8,7 @@ use Werify\Account\Laravel\Jobs\V1\Profile\UpdateJob;
 
 class WebController extends Controller
 {
-    public function locale(UpdateRequest $r)
+    public function localization(UpdateRequest $r)
     {
         try {
             $data = [];

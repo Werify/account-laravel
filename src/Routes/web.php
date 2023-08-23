@@ -23,7 +23,7 @@ Route::prefix(config('waccount.routes.web.prefix'))->name(config('waccount.route
 
     // Profile
     Route::prefix('profile')->name('profile.')->controller(ProfileWebController::class)->group(function () {
-        Route::get('locale', 'locale')->name('locale');
+        Route::get('locale', 'localization')->name('locale');
         Route::get('dark-mode', 'darkMode')->name('darkMode');
     });
 

@@ -38,6 +38,7 @@ class WebController extends Controller
                 try{
                     dispatch_sync(new UpdateJob(data: $data));
                 }catch (\Exception $e){
+                    session()->driver(config('waccount.session.driver'))->put('language', $r->input('language'));
                     return redirect($url);
                 }
             }

@@ -35,7 +35,11 @@ class WebController extends Controller
                 $url = str_replace(Currency::currencies, $r->input('currency'), $url);
             }
             if (! empty($data)) {
-                dispatch_sync(new UpdateJob(data: $data));
+                try{
+                    dispatch_sync(new UpdateJob(data: $data));
+                }catch (\Exception $e){
+                    return redirect($url);
+                }
             }
 
             return redirect($url);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Werify\Account\Laravel\Repositories\Contracts;
 
 interface RequestInterface

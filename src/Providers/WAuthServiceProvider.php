@@ -1,12 +1,12 @@
 <?php
+
 namespace Werify\Account\Laravel\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\ServiceProvider;
 
 class WAuthServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../Config/config.php', 'waccount');
@@ -19,5 +19,4 @@ class WAuthServiceProvider extends ServiceProvider
             return new CustomAuthGuard($app['request']);
         });
     }
-
 }

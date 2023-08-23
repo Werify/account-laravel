@@ -1,8 +1,8 @@
 <?php
+
 namespace Werify\Account\Laravel\Http\Requests\V1\Auth\Classic;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class LoginRequest extends FormRequest
 {
@@ -20,6 +20,4 @@ class LoginRequest extends FormRequest
             'password' => 'required|string',
         ];
     }
-
-
 }

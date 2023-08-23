@@ -7,15 +7,15 @@ return [
     'debug' => env('APP_DEBUG', false),
     'client_id' => env('WA_CLIENT_ID', 'sandbox'),
     'client_secret' => env('WA_CLIENT_SECRET', 'sandbox'),
-    'login_route' => env('WA_LOGIN_ROUTE', 'login'),
+    'login_route' => env('WA_LOGIN_ROUTE', 'waccount.web.authorize.classic.start'),
     'home_route' => env('WA_HOME_ROUTE', 'home'),
-    'logout_route' => env('WA_LOGOUT_ROUTE', 'logout'),
+    'logout_route' => env('WA_LOGOUT_ROUTE', 'index'),
 
     // Session
     'session' => [
         'driver' => env('WA_SESSION_DRIVER', 'file'),
         'variable' => env('WA_SESSION_VARIABLE', 'user'),
-        'view_variable' => env('WA_SESSION_VIEW_VARIABLE', true)
+        'view_variable' => env('WA_SESSION_VIEW_VARIABLE', true),
     ],
 
     // API
@@ -28,17 +28,20 @@ return [
                 'classic' => [
                     'login' => 'auth/classic/login',
                     'register' => 'auth/classic/register',
-                    'me' => 'auth/classic/me',
-                    'logout' => 'auth/classic/logout'
+                    'logout' => 'auth/classic/logout',
                 ],
             ],
             'authorize' => [
                 'classic' => [
                     'start' => 'authorize/classic/start',
                     'check' => 'authorize/classic/check',
-                ]
-            ]
-        ]
+                ],
+            ],
+            'profile' => [
+                'me' => 'profile/me',
+                'update' => 'profile',
+            ],
+        ],
     ],
 
     // Routes

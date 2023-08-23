@@ -1,4 +1,5 @@
 <?php
+
 namespace Werify\Account\Laravel\Http\Controllers\V1\Auth\Classic;
 
 use Briofy\RestLaravel\Http\Controllers\RestController;
@@ -7,47 +8,60 @@ use Werify\Account\Laravel\Http\Requests\V1\Auth\Classic\RegisterRequest;
 use Werify\Account\Laravel\Http\Resources\V1\Auth\Classic\LoginResource;
 use Werify\Account\Laravel\Jobs\V1\Auth\Classic\LoginJob;
 use Werify\Account\Laravel\Jobs\V1\Auth\Classic\LogoutJob;
-use Werify\Account\Laravel\Jobs\V1\Auth\Classic\MeJob;
 use Werify\Account\Laravel\Jobs\V1\Auth\Classic\RegisterJob;
+use Werify\Account\Laravel\Jobs\V1\Profile\MeJob;
 
 class ApiController extends RestController
 {
-
-    public function login(LoginRequest $r){
-        try{
+    public function login(LoginRequest $r)
+    {
+        try {
             return $this->respond(LoginResource::make(dispatch_sync(new LoginJob($r->validated()))));
-        }catch (\Exception $e){
-            if (config('waccount.debug')) return $this->setErrorMessage($e->getMessage())->respondWithError();
+        } catch (\Exception $e) {
+            if (config('waccount.debug')) {
+                return $this->setErrorMessage($e->getMessage())->respondWithError();
+            }
+
             return $this->setErrorMessage('WAccount classic login failed')->respondWithError();
         }
     }
 
-    public function register(RegisterRequest $r){
-        try{
+    public function register(RegisterRequest $r)
+    {
+        try {
             return $this->respond(dispatch_sync(new RegisterJob($r->validated())));
-        }catch (\Exception $e){
-            if (config('waccount.debug')) return $this->setErrorMessage($e->getMessage())->respondWithError();
+        } catch (\Exception $e) {
+            if (config('waccount.debug')) {
+                return $this->setErrorMessage($e->getMessage())->respondWithError();
+            }
+
             return $this->setErrorMessage('WAccount classic register failed')->respondWithError();
         }
     }
 
-    public function me(){
-        try{
+    public function me()
+    {
+        try {
             return $this->respond(dispatch_sync(new MeJob()));
-        }catch (\Exception $e){
-            if (config('waccount.debug')) return $this->setErrorMessage($e->getMessage())->respondWithError();
+        } catch (\Exception $e) {
+            if (config('waccount.debug')) {
+                return $this->setErrorMessage($e->getMessage())->respondWithError();
+            }
+
             return $this->setErrorMessage('WAccount classic me failed')->respondWithError();
         }
     }
 
-    public function logout(){
-        try{
+    public function logout()
+    {
+        try {
             return $this->respond(dispatch_sync(new LogoutJob()));
-        }catch (\Exception $e){
-            if (config('waccount.debug')) return $this->setErrorMessage($e->getMessage())->respondWithError();
+        } catch (\Exception $e) {
+            if (config('waccount.debug')) {
+                return $this->setErrorMessage($e->getMessage())->respondWithError();
+            }
+
             return $this->setErrorMessage('WAccount classic logout failed')->respondWithError();
         }
     }
-
-
 }

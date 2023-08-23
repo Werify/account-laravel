@@ -1,8 +1,8 @@
 <?php
+
 namespace Werify\Account\Laravel\Http\Requests\V1\Authorize\Classic;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StartRequest extends FormRequest
 {
@@ -19,6 +19,4 @@ class StartRequest extends FormRequest
             'scopes' => 'nullable|array',
         ];
     }
-
-
 }

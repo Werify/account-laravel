@@ -1,8 +1,8 @@
 <?php
+
 namespace Werify\Account\Laravel\Http\Requests\V1\Auth\Classic;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
@@ -21,6 +21,4 @@ class RegisterRequest extends FormRequest
             'first_name' => 'nullable|string',
         ];
     }
-
-
 }

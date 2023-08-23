@@ -6,8 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class StartResource extends JsonResource
 {
-
-    public function toArray($request){
+    public function toArray($request)
+    {
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -22,5 +22,4 @@ class StartResource extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
-
 }

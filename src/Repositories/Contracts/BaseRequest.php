@@ -1,4 +1,5 @@
 <?php
+
 namespace Werify\Account\Laravel\Repositories\Contracts;
 
 use Illuminate\Support\Facades\Http;
@@ -7,19 +8,28 @@ abstract class BaseRequest
 {
     public function post($path, $payload = null, $token = null)
     {
-        if ($payload === null) return Http::withHeaders($this->getHeaders($token))->post($path);
+        if ($payload === null) {
+            return Http::withHeaders($this->getHeaders($token))->post($path);
+        }
+
         return Http::withHeaders($this->getHeaders($token))->post($path, $payload);
     }
 
     public function put($path, $payload = null, $token = null)
     {
-        if ($payload === null) return Http::withHeaders($this->getHeaders($token))->put($path);
+        if ($payload === null) {
+            return Http::withHeaders($this->getHeaders($token))->put($path);
+        }
+
         return Http::withHeaders($this->getHeaders($token))->put($path, $payload);
     }
 
     public function delete($path, $payload = null, $token = null)
     {
-        if ($payload === null) return Http::withHeaders($this->getHeaders($token))->delete($path);
+        if ($payload === null) {
+            return Http::withHeaders($this->getHeaders($token))->delete($path);
+        }
+
         return Http::withHeaders($this->getHeaders($token))->delete($path, $payload);
     }
 
@@ -31,6 +41,7 @@ abstract class BaseRequest
     public function generateApiUrl(string $path): string
     {
         $baseUrl = config('waccount.sandbox', false) ? config('waccount.api.sandbox_url') : config('waccount.api.url');
+
         return $baseUrl.'/'.config('waccount.api.version').'/'.$path;
 
     }
@@ -43,8 +54,10 @@ abstract class BaseRequest
             'X-WACCOUNT-CLIENT-ID' => config('waccount.client_id'),
             'X-WACCOUNT-CLIENT-SECRET' => config('waccount.client_secret'),
         ];
-        if ($token) $headers['Authorization'] = 'Bearer '.$token;
+        if ($token) {
+            $headers['Authorization'] = 'Bearer '.$token;
+        }
+
         return $headers;
     }
-
 }

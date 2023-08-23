@@ -10,6 +10,8 @@ use Werify\Account\Laravel\Enums\V1\Profile\Language;
 use Werify\Account\Laravel\Enums\V1\Profile\Timezone;
 use Werify\Account\Laravel\Http\Requests\V1\Profile\UpdateRequest;
 use Werify\Account\Laravel\Jobs\V1\Profile\UpdateJob;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\URL;
 
 class WebController extends Controller
 {
@@ -17,22 +19,17 @@ class WebController extends Controller
     {
         try {
             $data = [];
-            $url = url()->previous();
             if ($r->has('language')) {
                 $data['language'] = $r->input('language');
-                $url = str_replace(Language::toArray(), $r->input('language'), $url);
             }
             if ($r->has('country')) {
                 $data['country'] = $r->input('country');
-                $url = str_replace(Country::countries, $r->input('country'), $url);
             }
             if ($r->has('timezone')) {
                 $data['timezone'] = $r->input('timezone');
-                $url = str_replace(Timezone::timezones, $r->input('timezone'), $url);
             }
             if ($r->has('currency')) {
                 $data['currency'] = $r->input('currency');
-                $url = str_replace(Currency::currencies, $r->input('currency'), $url);
             }
             if (! empty($data)) {
                 try {
@@ -42,7 +39,7 @@ class WebController extends Controller
                 }
             }
 
-            return redirect($url);
+            return redirect($this->replaceQueryParams(url()->previous(), $data));
         } catch (\Exception $e) {
             if (config('waccount.debug')) {
                 throw $e;
@@ -56,14 +53,13 @@ class WebController extends Controller
     {
         try {
             $data = ['dark_mode' => $r->input('dark_mode')];
-            $url = str_replace(DarkMode::toArray(), $r->input('dark_mode'), url()->previous());
             try {
                 dispatch_sync(new UpdateJob(data: $data));
             } catch (\Exception $e) {
                 session()->driver(config('waccount.session.driver'))->put('dark_mode', $r->input('dark_mode'));
             }
 
-            return redirect($url);
+            return redirect($this->replaceQueryParams(url()->previous(), $data));
         } catch (\Exception $e) {
             if (config('waccount.debug')) {
                 throw $e;
@@ -71,5 +67,16 @@ class WebController extends Controller
 
             return throw new \Exception('Something went wrong');
         }
+    }
+
+    function replaceQueryParams($url, $newParams) {
+        $parsedUrl = parse_url($url);
+        parse_str($parsedUrl['query'], $queryParams);
+        $queryParams = array_merge($queryParams, $newParams);
+
+        $newQuery = http_build_query($queryParams);
+        $parsedUrl['query'] = $newQuery;
+
+        return URL::build($parsedUrl);
     }
 }

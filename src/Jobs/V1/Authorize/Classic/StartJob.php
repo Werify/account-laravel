@@ -19,7 +19,7 @@ class StartJob extends BaseRequest
             $this->data = [
                 'scopes' => $this->scopes,
             ];
-            $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.authorize.classic.start'));
+            $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.authorize.classic.start')).'?l='.session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'))['language'] ?? session('language', 'en');
             $req = $this->post($endpoint, $this->data);
             if ($req->status() === 200) {
                 return $req->json();

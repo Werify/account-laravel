@@ -24,7 +24,7 @@ enum Language: string
     case BN = 'bn';
     case UR = 'ur';
 
-    public static function languages($lang): string
+    public static function name(string $lang): string
     {
         if ($lang == 'en') {
             return 'English';

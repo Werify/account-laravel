@@ -3,6 +3,7 @@
 namespace Werify\Account\Laravel\Http\Controllers\V1\Profile;
 
 use Illuminate\Routing\Controller;
+use Werify\Account\Laravel\Enums\V1\Profile\DarkMode;
 use Werify\Account\Laravel\Enums\V1\Profile\Language;
 use Werify\Account\Laravel\Http\Requests\V1\Profile\UpdateRequest;
 use Werify\Account\Laravel\Jobs\V1\Profile\UpdateJob;
@@ -29,7 +30,7 @@ class WebController extends Controller
                 dispatch_sync(new UpdateJob(data: $data));
             }
 
-            return redirect(url()->previous());
+            return redirect(str_replace(Language::toArray(), $r->input('language'), url()->previous()));
         } catch (\Exception $e) {
             if (config('waccount.debug')) {
                 throw $e;
@@ -45,7 +46,7 @@ class WebController extends Controller
             $data = ['dark_mode' => $r->input('dark_mode')];
             dispatch_sync(new UpdateJob(data: $data));
 
-            return redirect(str_replace(Language::toArray(), $r->input('language'), url()->previous()));
+            return redirect(str_replace(DarkMode::toArray(), $r->input('dark_mode'), url()->previous()));
         } catch (\Exception $e) {
             if (config('waccount.debug')) {
                 throw $e;

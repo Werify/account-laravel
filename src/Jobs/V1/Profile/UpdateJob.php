@@ -12,9 +12,20 @@ class UpdateJob extends BaseRequest
 
     public function __construct(string $bearer = null, array $data = [])
     {
-        $this->bearer = $bearer ?? session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
+        if (empty($bearer)) {
+            $user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
+            if ($user === null) {
+                return throw new \Exception('WAccount session user not found');
+            }
+            if (! array_key_exists('access_token', $user)) {
+                return throw new \Exception('WAccount bearer token not found');
+            }
+            $this->bearer = $user['access_token'];
+        } else {
+            $this->bearer = $bearer;
+        }
         if (empty($this->bearer)) {
-            return redirect()->route(config('waccount.login_route'));
+            return throw new \Exception('WAccount bearer token not found');
         }
         $this->data = $data;
     }

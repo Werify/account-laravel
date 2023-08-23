@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - 2023-08-22
 
 ### Added
+ - Add `locale` and `darkMode` methods into `Profile` module as web routes.
+
+## [Unreleased] - 2023-08-22
+
+### Added
  - Add `me` and `update` methods into `Profile` module.
 
 ### Removed

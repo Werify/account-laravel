@@ -20,4 +20,10 @@ Route::prefix(config('waccount.routes.web.prefix'))->name(config('waccount.route
         });
     });
 
+    // Profile
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('locale', 'locale')->name('locale');
+        Route::get('dark-mode', 'darkMode')->name('darkMode');
+    });
+
 });

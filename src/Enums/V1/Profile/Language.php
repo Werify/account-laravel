@@ -75,6 +75,42 @@ enum Language: string
         return 'English';
     }
 
+    public static function byCountry($country){
+        $country = strtoupper($country);
+
+        if (array_key_exists($country, self::countryLanguages())) {
+            return self::countryLanguages()[$country];
+        } else {
+            return 'Unknown';
+        }
+    }
+
+    public static function countryLanguages(): array
+    {
+        return [
+            'en' => 'English',
+            'es' => 'Spanish',
+            'fr' => 'French',
+            'de' => 'German',
+            'it' => 'Italian',
+            'pt' => 'Portuguese',
+            'zh' => 'Chinese',
+            'ja' => 'Japanese',
+            'ko' => 'Korean',
+            'ar' => 'Arabic',
+            'ru' => 'Russian',
+            'hi' => 'Hindi',
+            'bn' => 'Bengali',
+            'pa' => 'Punjabi',
+            'ur' => 'Urdu',
+            'fa' => 'Persian',
+            'tr' => 'Turkish',
+            'vi' => 'Vietnamese',
+            'th' => 'Thai',
+            //@TODO: Add more languages and codes here
+        ];
+    }
+
     // @TODO: Add flags to the languages and return them here
 
 }

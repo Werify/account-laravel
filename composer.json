@@ -17,7 +17,8 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^8.1",
-    "briofy/rest-laravel": "dev-main"
+    "briofy/rest-laravel": "dev-main",
+    "stevebauman/location": "^7.0"
   },
   "require-dev": {
     "laravel/pint": "^1.9"

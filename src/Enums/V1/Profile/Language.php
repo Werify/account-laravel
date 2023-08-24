@@ -81,7 +81,7 @@ enum Language: string
         if (array_key_exists($country, self::countryLanguages())) {
             return self::countryLanguages()[$country];
         } else {
-            return 'Unknown';
+            return config('app.locale');
         }
     }
 

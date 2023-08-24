@@ -17,9 +17,16 @@ class StartJob extends BaseRequest
     {
         try {
             $this->data = [
-                'scopes' => $this->scopes,
+                'scopes' => $this->scopes ?? ['read:profile'],
             ];
-            $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.authorize.classic.start')).'?l='.session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'))['language'] ?? session('language', 'en');
+            $user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
+            if (! empty($user) && array_key_exists('language', $user)) {
+                $language = $user['language'];
+            } else {
+                $language = session('language', 'en');
+            }
+            $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.authorize.classic.start'));
+            $this->data['language'] = $language;
             $req = $this->post($endpoint, $this->data);
             if ($req->status() === 200) {
                 return $req->json();

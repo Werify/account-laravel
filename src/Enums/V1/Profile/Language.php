@@ -75,7 +75,8 @@ enum Language: string
         return 'English';
     }
 
-    public static function byCountry($country){
+    public static function byCountry($country)
+    {
         $country = strtoupper($country);
 
         if (array_key_exists($country, self::countryLanguages())) {

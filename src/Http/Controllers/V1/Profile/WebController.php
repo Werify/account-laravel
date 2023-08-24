@@ -62,6 +62,4 @@ class WebController extends Controller
             return throw new \Exception('Something went wrong');
         }
     }
-
-
 }

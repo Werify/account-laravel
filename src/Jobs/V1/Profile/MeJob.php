@@ -20,7 +20,7 @@ class MeJob extends BaseRequest
     {
         try {
             $endpoint = $this->generateApiUrl(config('waccount.api.endpoints.profile.me'));
-            $req = $this->post($endpoint, null, $this->bearer);
+            $req = $this->get($endpoint, $this->bearer);
             if ($req->status() === 200) {
                 return $req->json();
             }

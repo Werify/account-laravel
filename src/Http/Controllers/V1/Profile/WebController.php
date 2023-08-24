@@ -3,15 +3,8 @@
 namespace Werify\Account\Laravel\Http\Controllers\V1\Profile;
 
 use Illuminate\Routing\Controller;
-use Werify\Account\Laravel\Enums\V1\Partials\Country;
-use Werify\Account\Laravel\Enums\V1\Profile\Currency;
-use Werify\Account\Laravel\Enums\V1\Profile\DarkMode;
-use Werify\Account\Laravel\Enums\V1\Profile\Language;
-use Werify\Account\Laravel\Enums\V1\Profile\Timezone;
 use Werify\Account\Laravel\Http\Requests\V1\Profile\UpdateRequest;
 use Werify\Account\Laravel\Jobs\V1\Profile\UpdateJob;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\URL;
 
 class WebController extends Controller
 {
@@ -39,7 +32,7 @@ class WebController extends Controller
                 }
             }
 
-            return redirect($this->replaceQueryParams(url()->previous(), $data));
+            return redirect($this->replaceLanguageInUrl(url()->previous(), $r->input('language')));
         } catch (\Exception $e) {
             if (config('waccount.debug')) {
                 throw $e;
@@ -59,7 +52,7 @@ class WebController extends Controller
                 session()->driver(config('waccount.session.driver'))->put('dark_mode', $r->input('dark_mode'));
             }
 
-            return redirect($this->replaceQueryParams(url()->previous(), $data));
+            return redirect(url()->previous());
         } catch (\Exception $e) {
             if (config('waccount.debug')) {
                 throw $e;
@@ -69,14 +62,46 @@ class WebController extends Controller
         }
     }
 
-    function replaceQueryParams($url, $newParams) {
+    public function replaceLanguageInUrl($url, $newLanguage = null)
+    {
+        if (empty($newLanguage)) {
+            return $url;
+        }
         $parsedUrl = parse_url($url);
-        parse_str($parsedUrl['query'], $queryParams);
-        $queryParams = array_merge($queryParams, $newParams);
 
-        $newQuery = http_build_query($queryParams);
-        $parsedUrl['query'] = $newQuery;
+        // Replace language code in path
+        if (isset($parsedUrl['path'])) {
+            $pathSegments = explode('/', trim($parsedUrl['path'], '/'));
+            if (count($pathSegments) > 0) {
+                $pathSegments[0] = $newLanguage;
+                $parsedUrl['path'] = '/'.implode('/', $pathSegments);
+            }
+        }
 
-        return URL::build($parsedUrl);
+        // Replace language code in query parameters
+        if (isset($parsedUrl['query'])) {
+            parse_str($parsedUrl['query'], $queryParams);
+            if (count($queryParams) > 0) {
+                $queryParams['lang'] = $newLanguage;
+                $parsedUrl['query'] = http_build_query($queryParams);
+            }
+        }
+
+        // Reconstruct the modified URL
+        $modifiedUrl = $parsedUrl['scheme'].'://'.$parsedUrl['host'];
+        if (isset($parsedUrl['port'])) {
+            $modifiedUrl .= ':'.$parsedUrl['port'];
+        }
+        if (isset($parsedUrl['path'])) {
+            $modifiedUrl .= $parsedUrl['path'];
+        }
+        if (isset($parsedUrl['query'])) {
+            $modifiedUrl .= '?'.$parsedUrl['query'];
+        }
+        if (isset($parsedUrl['fragment'])) {
+            $modifiedUrl .= '#'.$parsedUrl['fragment'];
+        }
+
+        return $modifiedUrl;
     }
 }

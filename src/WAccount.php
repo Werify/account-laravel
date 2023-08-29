@@ -58,8 +58,10 @@ final class WAccount
         }
 
         // Reconstruct the modified URL
-        if ($parsedUrl['host'] != config('app.url')) {
-            $parsedUrl['host'] = config('app.url');
+        $appUrl = config('app.url');
+        $appDomain = parse_url($appUrl, PHP_URL_HOST);
+        if ($parsedUrl['host'] != $appDomain) {
+            $parsedUrl['host'] = $appDomain;
         }
         $modifiedUrl = $parsedUrl['scheme'].'://'.$parsedUrl['host'];
         if (isset($parsedUrl['port'])) {

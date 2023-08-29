@@ -41,7 +41,11 @@ final class WAccount
             if (count($pathSegments) > 0) {
                 $pathSegments[0] = $newLanguage;
                 $parsedUrl['path'] = '/'.implode('/', $pathSegments);
+            } else {
+                $parsedUrl['path'] = '/'.$newLanguage;
             }
+        } else {
+            $parsedUrl['path'] = '/'.$newLanguage;
         }
 
         // Replace language code in query parameters
@@ -54,6 +58,9 @@ final class WAccount
         }
 
         // Reconstruct the modified URL
+        if ($parsedUrl['host'] != config('app.url')) {
+            $parsedUrl['host'] = config('app.url');
+        }
         $modifiedUrl = $parsedUrl['scheme'].'://'.$parsedUrl['host'];
         if (isset($parsedUrl['port'])) {
             $modifiedUrl .= ':'.$parsedUrl['port'];

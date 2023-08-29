@@ -31,7 +31,7 @@ final class WAccount
     public static function replaceLanguageInUrl($url, $newLanguage = null)
     {
         if (empty($newLanguage)) {
-            return $url;
+            $newLanguage = config('app.locale');
         }
         $parsedUrl = parse_url($url);
 

@@ -18,12 +18,13 @@ class WApi
         }else{
             return $this->respondInvalidParameters(new \Exception('Authorization Token Required.'));
         }
-        $request->headers->set('Authorization', 'Bearer '.$token);
+        $request->headers->set('Authorization', $token);
         try {
-            $me = dispatch_sync(new MeJob($token));
+            $rawToken = str_replace('Bearer ', '', $token);
+            $me = dispatch_sync(new MeJob($rawToken));
             if ($me['succeed']) {
                 $data = $me['results'];
-                $data['access_token'] = $token;
+                $data['access_token'] = $rawToken;
                 app()->setLocale($data['language']);
             }
         } catch (\Exception $e) {

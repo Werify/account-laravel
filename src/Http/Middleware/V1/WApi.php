@@ -2,26 +2,27 @@
 
 namespace Werify\Account\Laravel\Http\Middleware\V1;
 
+use Briofy\RestLaravel\Http\Traits\Respond;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\Response;
 use Werify\Account\Laravel\Jobs\V1\Profile\MeJob;
 
-class Auth
+class WApi
 {
+    use Respond;
     public function handle(Request $request, Closure $next): Response
     {
         $token = null;
         $user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
         if (! $user) {
-            return redirect()->route(config('waccount.login_route'));
+            return $this->respondUnauthorized(new \Exception('Unauthorized'));
         }
         if (array_key_exists('access_token', $user)) {
             $token = $user['access_token'];
         }
         if (! $token) {
-            return redirect()->route(config('waccount.login_route'));
+            return $this->respondForbidden(new \Exception('Forbidden'));
         }
         $request->headers->set('Authorization', 'Bearer '.$token);
         try {
@@ -31,9 +32,6 @@ class Auth
                 $data['access_token'] = $token;
                 session()->driver(config('waccount.session.driver'))->put(config('waccount.session.variable'), $data);
                 app()->setLocale($data['language']);
-                if (config('waccount.session.view_variable')) {
-                    View::share(config('waccount.session.variable'), $data);
-                }
             }
         } catch (\Exception $e) {
             if (config('waccount.debug')) {
@@ -41,7 +39,7 @@ class Auth
             }
             session()->driver(config('waccount.session.driver'))->forget(config('waccount.session.variable'));
 
-            return redirect()->route(config('waccount.login_route'));
+            return $this->respondWithError(new \Exception('Unhandle Error, Check your token.'));
         }
 
         return $next($request);

@@ -27,6 +27,7 @@ class WApi
                 $data = $me['results'];
                 $data['access_token'] = $rawToken;
                 app()->setLocale($data['language']);
+                $request->merge(['user' => $data]);
             }
         } catch (\Exception $e) {
             if (config('waccount.debug')) {

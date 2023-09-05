@@ -13,16 +13,10 @@ class WApi
     use Respond;
     public function handle(Request $request, Closure $next): Response
     {
-        $token = null;
-        $user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
-        if (! $user) {
-            return $this->respondUnauthorized(new \Exception('Unauthorized'));
-        }
-        if (array_key_exists('access_token', $user)) {
-            $token = $user['access_token'];
-        }
-        if (! $token) {
-            return $this->respondForbidden(new \Exception('Forbidden'));
+        if($request->hasHeader('Authorization')) {
+            $token = $request->header('Authorization');
+        }else{
+            return $this->respondInvalidParameters(new \Exception('Authorization Token Required.'));
         }
         $request->headers->set('Authorization', 'Bearer '.$token);
         try {
@@ -30,15 +24,12 @@ class WApi
             if ($me['succeed']) {
                 $data = $me['results'];
                 $data['access_token'] = $token;
-                session()->driver(config('waccount.session.driver'))->put(config('waccount.session.variable'), $data);
                 app()->setLocale($data['language']);
             }
         } catch (\Exception $e) {
             if (config('waccount.debug')) {
                 throw new \Exception($e->getMessage());
             }
-            session()->driver(config('waccount.session.driver'))->forget(config('waccount.session.variable'));
-
             return $this->respondWithError(new \Exception('Unhandle Error, Check your token.'));
         }
 

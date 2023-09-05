@@ -11,11 +11,12 @@ use Werify\Account\Laravel\Jobs\V1\Profile\MeJob;
 class WApi
 {
     use Respond;
+
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->hasHeader('Authorization')) {
+        if ($request->hasHeader('Authorization')) {
             $token = $request->header('Authorization');
-        }else{
+        } else {
             return $this->respondInvalidParameters(new \Exception('Authorization Token Required.'));
         }
         $request->headers->set('Authorization', $token);
@@ -31,6 +32,7 @@ class WApi
             if (config('waccount.debug')) {
                 throw new \Exception($e->getMessage());
             }
+
             return $this->respondWithError(new \Exception('Unhandle Error, Check your token.'));
         }
 

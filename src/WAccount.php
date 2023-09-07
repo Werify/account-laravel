@@ -25,7 +25,8 @@ final class WAccount
         app()->setLocale($language);
         session()->driver(config('waccount.session.driver'))->put('language', $language);
 
-        $url = $previous_url ? self::replaceLanguageInUrl($previous_url, $language) : self::replaceLanguageInUrl(config('waccount.home_route'), $language);
+        $url = $previous_url ? self::replaceLanguageInUrl($previous_url, $language) : self::replaceLanguageInUrl(route(config('waccount.home_route')), $language);
+
         return redirect($url);
     }
 

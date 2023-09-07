@@ -7,7 +7,7 @@ use Werify\Account\Laravel\Enums\V1\Profile\Language;
 
 final class WAccount
 {
-    public static function initializeIndex(string $lang = null)
+    public static function initializeIndex(string $previous_url, string $lang = null)
     {
         if (! empty($lang)) {
             $language = $lang;
@@ -25,7 +25,8 @@ final class WAccount
         app()->setLocale($language);
         session()->driver(config('waccount.session.driver'))->put('language', $language);
 
-        return self::replaceLanguageInUrl(url()->previous(), $language);
+        $url = $previous_url ? self::replaceLanguageInUrl($previous_url, $language) : self::replaceLanguageInUrl(config('waccount.home_route'), $language);
+        return redirect($url);
     }
 
     public static function replaceLanguageInUrl($url, $newLanguage = null)

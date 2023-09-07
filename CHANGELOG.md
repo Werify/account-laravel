@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 2023-090-07
+
+### Added
+ - Add `url` in `initializeIndex` as parameter for custom usages.
+
+### Fixed
+ - Fix `initializeIndex` bug for return URL as string, now redirect directly. 
+ - Fix `initializeIndex` bug for `url()->previous()` as latest user closed url(browser tab).
+
 ## [Unreleased] - 2023-09-04
 
 ### Added

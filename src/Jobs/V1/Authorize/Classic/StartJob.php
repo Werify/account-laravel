@@ -17,7 +17,7 @@ class StartJob extends BaseRequest
     {
         try {
             $this->data = [
-                'scopes' => $this->scopes ?? ['read:profile'],
+                'scopes' => $this->scopes ?? ['read:profile.first_name', 'read:profile.last_name', 'read:profile.avatar', 'read:profile.username'],
             ];
             $user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
             if (! empty($user) && array_key_exists('language', $user)) {

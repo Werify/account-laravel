@@ -10,6 +10,7 @@ return [
     'login_route' => env('WA_LOGIN_ROUTE', 'waccount.web.authorize.classic.start'),
     'home_route' => env('WA_HOME_ROUTE', 'home'),
     'logout_route' => env('WA_LOGOUT_ROUTE', 'index'),
+    'index_route' => env('WA_INDEX_ROUTE', 'index'),
 
     // Session
     'session' => [

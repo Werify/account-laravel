@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
  - Add `url` in `initializeIndex` as parameter for custom usages.
+ - Add `index_route` in `waccount.php` config file for `initializeIndex` function.
 
 ### Fixed
  - Fix `initializeIndex` bug for return URL as string, now redirect directly. 

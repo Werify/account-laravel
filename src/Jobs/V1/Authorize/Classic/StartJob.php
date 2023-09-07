@@ -16,9 +16,8 @@ class StartJob extends BaseRequest
     public function handle()
     {
         try {
-            $this->data = [
-                'scopes' => $this->scopes ?? ['read:profile.first_name', 'read:profile.last_name', 'read:profile.avatar', 'read:profile.username'],
-            ];
+            $this->data = [];
+            $this->data['scopes'] = $this->scopes === [] ? ['read:profile.first_name', 'read:profile.last_name', 'read:profile.avatar', 'read:profile.username'] : $this->scopes;
             $user = session()->driver(config('waccount.session.driver'))->get(config('waccount.session.variable'));
             if (! empty($user) && array_key_exists('language', $user)) {
                 $language = $user['language'];

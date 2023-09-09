@@ -20,6 +20,10 @@ class WComponent extends BaseComponent
 
     public function wrender(?string $view = 'index', ?array $attrs = [])
     {
-        return view($view, $attrs)->layoutData([config('waccount.session.view_variable') => $this->user, config('waccount.session.view_variable').'_id' => $this->user_id]);
+        if (config('waccount.session.view_variable')) {
+            return view($view, $attrs)->layoutData([config('waccount.session.variable') => $this->user, config('waccount.session.variable').'_id' => $this->user_id]);
+        } else {
+            return view($view, $attrs);
+        }
     }
 }

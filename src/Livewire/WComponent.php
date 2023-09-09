@@ -17,4 +17,9 @@ class WComponent extends BaseComponent
             $this->user_id = $this->user['id'];
         }
     }
+
+    public function wrender(?string $view = 'index', ?array $attrs = [])
+    {
+        return view($view, $attrs)->layoutData([config('waccount.session.view_variable') => $this->user, config('waccount.session.view_variable').'_id' => $this->user_id]);
+    }
 }

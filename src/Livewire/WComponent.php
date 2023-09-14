@@ -18,12 +18,14 @@ class WComponent extends BaseComponent
         }
     }
 
-    public function wrender(?string $view = 'index', ?array $attrs = [])
+    public function wrender(?string $view = 'index', ?array $attrs = [], ?array $layout = [])
     {
+        $layout_data = $layout;
         if (config('waccount.session.view_variable')) {
-            return view($view, $attrs)->layoutData([config('waccount.session.variable') => $this->user, config('waccount.session.variable').'_id' => $this->user_id]);
-        } else {
-            return view($view, $attrs);
+            $layout_data[config('waccount.session.variable')] = $this->user;
+            $layout_data[config('waccount.session.variable').'_id'] = $this->user_id;
         }
+
+        return view($view, $attrs)->layoutData($layout_data);
     }
 }

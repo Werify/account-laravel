@@ -22,8 +22,12 @@ class WComponent extends BaseComponent
     {
         $layout_data = $layout;
         if (config('waccount.session.view_variable')) {
-            $layout_data[config('waccount.session.variable')] = $this->user;
-            $layout_data[config('waccount.session.variable').'_id'] = $this->user_id;
+            if ($this->user) {
+                $layout_data[config('waccount.session.variable')] = $this->user;
+            }
+            if ($this->user_id) {
+                $layout_data[config('waccount.session.variable').'_id'] = $this->user_id;
+            }
         }
 
         return view($view, $attrs)->layoutData($layout_data);
